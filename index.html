@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inducción HSEQ – Campo Condor</title>
+  <style>
+  :root {
+    --verde-nikoil: #1a7f3f; /* Verde corporativo Nikoil */
+    --verde-hover: #155e2f;
+    --verde-enlace: #14692e;
+    --gris-fondo: #f2f4f2;
+    --gris-detalle: #d1d5d0;
+    --blanco: #ffffff;
+    --negro-suave: #333333;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: var(--gris-fondo);
+    margin: 0;
+    padding: 0;
+    color: var(--negro-suave);
+  }
+
+  header {
+    background-color: var(--verde-nikoil);
+    color: var(--blanco);
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  header img {
+    max-height: 60px;
+    max-width: 140px;
+    object-fit: contain;
+  }
+
+  .container {
+    background-color: var(--blanco);
+    padding: 40px;
+    max-width: 1000px;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  }
+
+  section {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.6s ease-in-out;
+  }
+
+  section.active {
+    display: block;
+    opacity: 1;
+  }
+
+  .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+
+  button {
+    background-color: var(--verde-nikoil);
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 12px 24px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: var(--verde-hover);
+  }
+
+  button:focus {
+    outline: 3px solid #cccccc;
+  }
+
+  h1, h2 {
+    color: var(--verde-nikoil);
+  }
+
+  ul {
+    padding-left: 20px;
+  }
+
+  a {
+    color: var(--verde-enlace);
+  }
+
+  img.qr {
+    width: 200px;
+    display: block;
+    margin: 20px auto;
+  }
+
+  .card {
+    background: var(--gris-fondo);
+    border-left: 4px solid var(--verde-enlace);
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+  }
+
+  details {
+    background-color: var(--gris-fondo);
+    border-left: 4px solid var(--verde-enlace);
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  details[open] {
+    background-color: #e6f4ea;
+  }
+
+  .seccion-contenido {
+    background-color: var(--gris-fondo);
+    border-left: 6px solid var(--verde-enlace);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+  }
+
+  .imagen-seccion {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .imagen-seccion img {
+    max-width: 100%;
+    height: auto;
+    max-height: 350px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .imagen-seccion img:hover {
+    transform: scale(1.02);
+  }
+
+  .img-superior-derecha {
+    float: right;
+    margin-left: 20px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    max-width: 90px;
+    z-index: 1;
+  }
+
+  .img-superior-derecha img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  section.has-personaje {
+    padding-right: 120px;
+  }
+
+  .grid-dos-columnas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .img-superior-derecha {
+      float: none;
+      display: block;
+      margin: 0 auto 20px auto;
+      text-align: center;
+    }
+
+    section.has-personaje {
+      padding-right: 0;
+    }
+
+    .grid-dos-columnas {
+      grid-template-columns: 1fr !important;
+    }
+
+    .card ul,
+    .card p {
+      font-size: 15px;
+    }
+
+    details {
+      padding: 8px 12px;
+    }
+
+    details p,
+    details ul {
+      font-size: 14px;
+    }
+
+    details ul {
+      padding-left: 18px;
+    }
+
+    details summary {
+      font-size: 15px;
+    }
+
+    .vial-grid {
+      grid-template-columns: 1fr !important;
+      gap: 15px;
+    }
+
+    .vial-grid .card h4 {
+      font-size: 16px;
+    }
+
+    .vial-grid .card p {
+      font-size: 14px;
+    }
+  }
+
+  details summary {
+    font-size: 16px;
+  }
+
+  details p,
+  details ul {
+    font-size: 15px;
+  }
+</style>
+</head>
+<body>
+<header>
+  <div><strong>Inducción HSEQ visitantes y contratistas</strong></div>
+  <img src="https://i.postimg.cc/1tG8p9Tm/Logo-Nikoil-editado-2-1.png">
+</header>
+<div id="barraProgreso" style="height: 6px; background-color: #007BFF; width: 0%; position: fixed; top: 0; left: 0; z-index: 999; transition: width 0.4s;"></div>
+
+<div class="container">
+  <section class="active">
+    <div class="seccion-contenido">
+      <p style="font-size: 16px; color: #333; margin-top: 15px;">
+      Esta inducción está diseñada para brindarte la información clave que necesitas para actuar de forma <strong>segura</strong>, <strong>responsable</strong> y en coherencia con nuestra <strong>cultura HSEQ</strong>.
+    </p>
+    <p style="font-size: 16px; color: #333;">
+      📌 La inducción es <strong>obligatoria y autónoma</strong>. Su aprobación es requisito previo para cualquier ingreso o actividad dentro de nuestras instalaciones.
+    </p>
+    <p style="font-size: 16px; color: #007BFF; font-weight: bold; text-align: center; margin-top: 25px;">
+      ¡Gracias por sumarte a un entorno más seguro, eficiente y sostenible! 🌱
+    </p>
+  </div>
+</section>
+<section>
+  <div class="img-superior-derecha">
+    <img src="https://i.postimg.cc/6517X1xh/Chat-GPT-Image-Jun-20-2025-02-29-42-PM.png" alt="Personaje PBI con EPP">
+  </div>
+
+  <h2>2. OBJETIVO DE LA INDUCCIÓN</h2>
+
+  <div class="imagen-seccion">
+    <img src="https://i.postimg.cc/2SLNDkH3/2-DJI-0290.jpg" alt="Descripción de la imagen">
+  </div>
+
+  <p>Brindar a todo visitante o contratista las herramientas y conocimientos esenciales en materia de Seguridad, Salud, Ambiente y Calidad (HSEQ), garantizando la integridad de las personas, el entorno y la continuidad operativa.</p>
+</section>
+  <section>
+  <div class="img-superior-derecha">
+    <img src="https://i.postimg.cc/6517X1xh/Chat-GPT-Image-Jun-20-2025-02-29-42-PM.png" alt="Personaje PBI con EPP">
+  </div>
+
+  <h2>3. POLÍTICAS CORPORATIVAS</h2>
+  <p>Estas son las políticas esenciales que rigen nuestro actuar diario en Omega:</p>
+
+  <details>
+    <summary>📌 Política Integral HSEQ</summary>
+    <p>Establece nuestro compromiso con la protección de la vida, la salud, el ambiente y la calidad en todos los procesos. Promueve la mejora continua, la prevención de incidentes y el cumplimiento de la normatividad aplicable. 👉 
+    <a href="https://drive.google.com/file/d/1omlq_CWbL5AbBuM-ZY2SnjlvBZGhbRRf/view?usp=sharing" target="_blank">Ver PDF</a></p>
+  </details>
+
+  <details>
+    <summary>🚫 Política de prevención SPA</summary>
+    <p>Fomenta ambientes seguros y saludables mediante acciones de promoción, prevención y acompañamiento, orientadas a reducir los riesgos asociados al uso de sustancias psicoactivas en contextos laborales. 👉 
+    <a href="https://drive.google.com/file/d/1yXcr2IgKqqtAsfnHfCK5cyJ_P6geaEti/view?usp=sharing" target="_blank">Ver PDF</a></p>
+  </details>
+
+  <details>
+    <summary>🚗 Política de seguridad vial</summary>
+    <p>Promueve una cultura de movilidad segura dentro y fuera de nuestras instalaciones, mediante la prevención de accidentes, el respeto a las normas de tránsito y la concientización sobre comportamientos responsables. 👉 
+    <a href="https://drive.google.com/file/d/1VyYUdSryrqoBhFA1MuAicZYog6pAOJpr/view?usp=sharing" target="_blank">Ver PDF</a></p>
+  </details>
+
+  <p>📌 Es tu responsabilidad conocerlas y aplicarlas en todo momento durante tu permanencia en nuestras instalaciones.</p>
+</section>
+  <section>
+  <div class="img-superior-derecha">
+    <img src="https://i.postimg.cc/6517X1xh/Chat-GPT-Image-Jun-20-2025-02-29-42-PM.png" alt="Personaje PBI con EPP">
+  </div>
+
+  <h2>4. PELIGROS Y RIESGOS EN CAMPO</h2>
+<p>Durante tu visita podrías estar expuesto a diversos peligros operativos. A continuación, te presentamos los más representativos para este centro de trabajo:</p>
+
+<details>
+  <summary>⚡ Riesgo eléctrico</summary>
+  <p>Tableros y equipos energizados representan peligro de electrocución o arco eléctrico.</p>
+  <p><strong>✅ Medida preventiva:</strong> No toques ni te acerques a equipos eléctricos sin autorización expresa del área técnica.</p>
+</details>
+
+<details>
+  <summary>🧪 Riesgos químicos</summary>
+  <p>Exposición a combustibles, lubricantes, ácidos u otros productos que pueden causar quemaduras, intoxicación o reacciones.</p>
+  <p><strong>✅ Medida preventiva:</strong> Usa siempre el EPP suministrado (botas, gafas, guantes) y no manipules sustancias químicas.</p>
+</details>
+
+<details>
+  <summary>⚙️ Riesgos mecánicos</summary>
+  <p>Equipos rotativos, poleas, fajas y herramientas en operación pueden generar atrapamientos o golpes.</p>
+  <p><strong>✅ Medida preventiva:</strong> Mantente fuera del alcance de equipos en movimiento y respeta las zonas demarcadas.</p>
+</details>
+
+<details>
+  <summary>📉 Caídas a nivel</summary>
+  <p>Superficies húmedas, irregulares o con presencia de barro pueden causar tropiezos o resbalones.</p>
+  <p><strong>✅ Medida preventiva:</strong> Usa calzado adecaudo, camina con precaución y evita correr en zonas operativas.</p>
+</details>
+
+<details>
+  <summary>📤 Caídas desde altura</summary>
+  <p>Riesgo al acceder a escaleras, plataformas o estructuras.</p>
+  <p><strong>✅ Medida preventiva:</strong> No subas a lugares elevados sin autorización y sin los equipos de protección contra caídas.</p>
+</details>
+
+<details>
+  <summary>🔥 Áreas clasificadas</summary>
+  <p>Zonas con presencia de gases o vapores inflamables. Riesgo de explosión o incendio.</p>
+  <p><strong>✅ Medida preventiva:</strong> No ingreses a áreas señalizadas como peligrosas sin compañía ni autorización.</p>
+</details>
+
+<details>
+  <summary>🌡️ Temperaturas y presiones elevadas</summary>
+  <p>Contactos con equipos calientes o presurizados pueden causar quemaduras o accidentes por liberación de energía.</p>
+  <p><strong>✅ Medida preventiva:</strong> No toques válvulas, tuberías ni superficies metálicas; mantén distancia segura.</p>
+</details>
+
+<details>
+  <summary>⛈️ Tormentas eléctricas</summary>
+  <p>Riesgo de descargas eléctricas si se está al aire libre durante tormentas.</p>
+  <p><strong>✅ Medida preventiva:</strong> Suspende cualquier actividad a cielo abierto y refúgiate en zonas cubiertas y seguras.</p>
+</details>
+
+  <p>🧥 Ten presente que este centro de trabajo está ubicado a más de 2.600 metros sobre el nivel del mar, por lo que es importante protegerse del frío con ropa térmica adecuada y mantenerse hidratado durante la jornada.</p>
+  <p>📌 Además, pueden existir otros riesgos propios de la operación que serán comunicados durante tu ingreso. Sigue siempre las instrucciones del personal responsable o del área HSEQ.</p>
+</section>
+<section>
+  <div class="img-superior-derecha">
+    <img src="https://i.postimg.cc/6517X1xh/Chat-GPT-Image-Jun-20-2025-02-29-42-PM.png" alt="Personaje PBI con EPP">
+  </div>
+
+  <h2>5. CONOCE NUESTRAS REGLAS DE ORO</h2>
+
+  <div style="font-family: 'Segoe UI', sans-serif; background-color: white; color: #002b45; font-size: 10.5px; padding: 0.5rem;">
+    <div style="text-align: center; margin-bottom: 20px;">
+      <img src="https://i.postimg.cc/bNZgDYD9/Copia-de-Logo-147-MPX.png" alt="Logo HSEQ" style="height: 50px; vertical-align: middle;">
+      <img src="https://i.postimg.cc/fRBGStH9/diez.png" alt="Escudo 10" style="height: 45px; vertical-align: middle;">
+      <span style="font-size: 20px; font-weight: bold; color: #00426c; vertical-align: middle; margin-left: 10px;">Reglas de Oro – Compromiso con la Vida</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px;">
+
+      <!-- Regla 1 -->
+      <div style="background-color: #f4f8fb; border-left: 5px solid #00426c; padding: 10px; border-radius: 8px;">
+        <h4>1️⃣ Antes de empezar, revisa y planifica</h4>
+        <ul>
+          <li>Obtén el permiso de trabajo antes de iniciar.</li>
+          <li>Realiza el ATS con tu equipo, incluso en tareas rutinarias.</li>
+          <li>Verifica que exista el procedimiento PON y anexos requeridos.</li>
+        </ul>
+      </div>
+
+      <!-- Regla 2 -->
+      <div style="background-color: #f4f8fb; border-left: 5px solid #00426c; padding: 10px; border-radius: 8px;">
+        <h4>2️⃣ Aísla bien las energías peligrosas</h4>
+        <ul>
+          <li>Bloquea, etiqueta y aísla todas las fuentes de energía antes de intervenir.</li>
+          <li>Incluye eléctricas, térmicas, neumáticas y partes móviles.</li>
+          <li>No retires bloqueos sin autorización.</li>
+        </ul>
+      </div>
+
+      <!-- Regla 3 -->
+      <div style="background-color: #f4f8fb; border-left: 5px solid #00426c; padding: 10px; border-radius: 8px;">
+        <h4>3️⃣ Cuidado con trabajos en caliente</h4>
+        <ul>
+          <li>Verifica el permiso y el monitoreo de gases.</li>
+          <li>Ten extintores disponibles y listos para usar.</li>
+          <li>Retira materiales inflamables del área.</li>
+        </ul>
+      </div>
+
+      <!-- Regla 4 -->
+      <div style="background-color: #f4f8fb; border-left: 5px solid #00426c; padding: 10px; border-radius: 8px;">
+        <h4>4️⃣ Con cargas, no te la juegues</h4>
+        <ul>
+          <li>Revisa eslingas, ganchos y estado de la carga.</li>
+          <li>Nunca estés bajo una carga suspendida.</li>
+          <li>Mantén comunicación clara con el operador.</li>
+        </ul>
+      </div>
+
+      <!-- Regla 5 -->
+      <div style="background-color: #f4f8fb; border-left: 5px solid #00426c; padding: 10px; border-radius: 8px;">
+        <h4>5️⃣ Protégete al trabajar en altura</h4>
+        <ul>
+          <li>Usa arnés y puntos de anclaje certificados.</li>
+          <li>Asegura herramientas y materiales.</li>
+          <li>Verifica tu equipo antes de usarlo.</li>
+        </ul>
+      </div>
+
+      <!-- Regla 6 -->
+      <div style="background-color: #f4f8fb; border-left: 5px solid #00426c; padding: 10px; border-radius: 8px;">
+        <h4>6️⃣ Conduce con responsabilidad</h4>
+        <ul>
+          <li>Usa el cinturón de seguridad siempre.</li>
+          <li>No uses el celular ni manejes fatigado.</li>
+          <li>Respeta los límites de velocidad.</li>
+        </ul>
+      </div>
+
+      <!-- Regla 7 -->
+      <div style="background-color: #f4f8fb; border-left: 5px solid #00426c; padding: 10px; border-radius: 8px;">
+        <h4>7️⃣ Usa siempre tu EPP</h4>
+        <ul>
+          <li>Selecciona el EPP adecuado según la tarea.</li>
+          <li>Verifica que esté en buen estado antes de usarlo.</li>
+          <li>Aplica siempre, incluso en tareas cortas o rutinarias.</li>
+        </ul>
+      </div>
+
+      <!-- Regla 8 -->
+      <div style="background-color: #f4f8fb; border-left: 5px solid #00426c; padding: 10px; border-radius: 8px;">
+        <h4>8️⃣ Maneja correctamente sustancias peligrosas</h4>
+        <ul>
+          <li>Etiqueta los productos correctamente.</li>
+          <li>Consulta la hoja de seguridad antes de usarlos.</li>
+          <li>Actúa de inmediato en caso de derrames o fugas.</li>
+        </ul>
+      </div>
+
+      <!-- Regla 9 -->
+      <div style="background-color: #f4f8fb; border-left: 5px solid #00426c; padding: 10px; border-radius: 8px;">
+        <h4>9️⃣ No toques equipos eléctricos sin permiso</h4>
+        <ul>
+          <li>Solo personal autorizado puede intervenir.</li>
+          <li>Verifica corte, señalización y aislamiento.</li>
+          <li>Usa herramientas certificadas.</li>
+        </ul>
+      </div>
+
+      <!-- Regla 10 -->
+      <div style="background-color: #f4f8fb; border-left: 5px solid #00426c; padding: 10px; border-radius: 8px;">
+        <h4>🔟 Si no es seguro, detente</h4>
+        <ul>
+          <li>Tienes derecho y deber de detener tareas peligrosas.</li>
+          <li>Reporta al supervisor o a HSEQ.</li>
+          <li>No reinicies hasta controlar el riesgo.</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div style="text-align: right; font-size: 0.75em; color: #888; margin-top: 20px;">
+      Versión 1.0 – Reglas de Oro HSEQ | Actualizado: mayo 2025
+    </div>
+  </div>
+</section>
+<section>
+  <div class="img-superior-derecha">
+    <img src="https://i.postimg.cc/6517X1xh/Chat-GPT-Image-Jun-20-2025-02-29-42-PM.png" alt="Personaje PBI con EPP">
+  </div>
+
+  <h2>6. PERMISOS DE TRABAJO Y ATS</h2>
+
+  <p>📝 En el Bloque Buenavista todo trabajo no rutinario debe contar con autorización previa mediante un <strong>Permiso de Trabajo</strong> y la elaboración de un <strong>Análisis de Trabajo Seguro (ATS)</strong>.</p>
+
+  <div class="card">
+    <ul>
+      <li><strong>Permiso de trabajo:</strong> Documento obligatorio que establece las condiciones seguras antes de iniciar tareas con riesgo.</li>
+      <li><strong>ATS:</strong> Proceso en el que se identifican los peligros asociados a la actividad, se analizan los riesgos y se definen controles específicos.</li>
+      <li>Debe ser diligenciado y firmado por el responsable del área, el ejecutante del trabajo y validado por HSEQ si aplica.</li>
+      <li>Incluye revisión de EPP, herramientas, entorno, autorizaciones, condiciones de clima y estado de equipos.</li>
+    </ul>
+  </div>
+
+  <p>📌 Todo visitante que desarrolle actividades deberá contar con el permiso correspondiente, incluso si se trata de acompañamiento u observación técnica.</p>
+</section>
+<section>
+  <div class="img-superior-derecha">
+    <img src="https://i.postimg.cc/6517X1xh/Chat-GPT-Image-Jun-20-2025-02-29-42-PM.png" alt="Personaje PBI con EPP">
+  </div>
+
+  <h2>7. TAREAS DE ALTO RIESGO</h2>
+
+  <p>Estas tareas se consideran críticas por su potencial de causar incidentes graves o fatales si no se gestionan con controles adecuados. Los siguientes son <strong>requisitos iniciales mínimos</strong>; sin embargo, pueden exigirse controles adicionales según la evaluación específica de riesgos, el procedimiento interno o condiciones del lugar de trabajo.</p>
+
+  <p><strong>Marco normativo de referencia:</strong> Decreto 1072 de 2015, Resolución 0312 de 2019, y normativas específicas según el tipo de tarea.</p>
+
+  <details>
+    <summary>🧗‍♂️ Trabajo en alturas</summary>
+    <p>Requiere autorización formal y cumplimiento riguroso de estándares técnicos. Aplica para tareas realizadas desde 2 metros o más sobre el nivel inferior.</p>
+    <ul>
+      <li>Curso vigente de trabajo en alturas, según el rol desempeñado.</li>
+      <li>Uso de arnés certificado, líneas de vida y sistemas anticaídas.</li>
+      <li>Permiso de trabajo diligenciado y firmado.</li>
+      <li>Inspección del área, equipos y puntos de anclaje.</li>
+    </ul>
+    <p><strong>Normativa:</strong> Resolución 4272 de 2021, NTC 1735, Decreto 1072 de 2015.</p>
+  </details>
+
+  <details>
+    <summary>🚧 Espacios confinados</summary>
+    <p>Aplica para tanques, ductos, cámaras u otras estructuras cerradas con acceso limitado. Se deben cumplir protocolos estrictos antes del ingreso.</p>
+    <ul>
+      <li>Evaluación previa y autorización por personal competente.</li>
+      <li>Medición de gases, ventilación mecánica y monitoreo continuo.</li>
+      <li>Plan de rescate activo y vigilancia externa permanente.</li>
+      <li>Permiso específico y señalización del área de trabajo.</li>
+    </ul>
+    <p><strong>Normativa:</strong> Resolución 0491 de 2020, Guía Técnica GTC 220, Decreto 1072 de 2015.</p>
+  </details>
+
+  <details>
+    <summary>🔥 Trabajos en caliente</summary>
+    <p>Incluye actividades que generan calor, chispas o llama abierta (soldadura, corte, esmerilado, etc.).</p>
+    <ul>
+      <li>Permiso de trabajo autorizado y análisis de atmósferas si aplica.</li>
+      <li>Presencia de extintores y materiales de control contra incendios.</li>
+      <li>Eliminación de materiales inflamables cercanos.</li>
+      <li>Vigilancia durante y después de la actividad.</li>
+    </ul>
+    <p><strong>Normativa:</strong> NFPA 51B, Decreto 1072 de 2015.</p>
+  </details>
+
+  <details>
+    <summary>🏗️ Izaje de cargas</summary>
+    <p>Requiere planeación técnica y supervisión. Aplica para uso de grúas, polipastos, plumas o maniobras de elevación.</p>
+    <ul>
+      <li>Inspección técnica de eslingas, ganchos y accesorios.</li>
+      <li>Evaluación del entorno y capacidad del equipo de izaje.</li>
+      <li>Presencia de señalero certificado con línea visual directa.</li>
+      <li>Zona demarcada y sin personal bajo la carga.</li>
+    </ul>
+    <p><strong>Normativa:</strong> NTC 2769, ISO 23813, Decreto 1072 de 2015.</p>
+  </details>
+
+  <details>
+    <summary>⚠️ Energías peligrosas (LOTO)</summary>
+    <p>Contempla tareas que implican contacto con fuentes de energía eléctrica, mecánica, hidráulica, neumática u otras.</p>
+    <ul>
+      <li>Identificación previa de todas las fuentes energizadas.</li>
+      <li>Aplicación efectiva del sistema LOTO (bloqueo y etiquetado).</li>
+      <li>Verificación de aislamiento completo antes de intervenir.</li>
+      <li>Capacitación específica y autorización del personal.</li>
+    </ul>
+    <p><strong>Normativa:</strong> OSHA 1910.147, GTC 45, Decreto 1072 de 2015.</p>
+  </details>
+
+  <p>📌 También se consideran tareas de alto riesgo: excavaciones profundas, demolición estructural, perforación mecánica, ingreso a zonas clasificadas, entre otras. Siempre consulta el procedimiento interno y coordina con el área HSEQ.</p>
+</section>
+<section>
+  <div class="img-superior-derecha">
+    <img src="https://i.postimg.cc/6517X1xh/Chat-GPT-Image-Jun-20-2025-02-29-42-PM.png" alt="Personaje PBI con EPP">
+  </div>
+
+  <h2>8. GESTIÓN AMBIENTAL</h2>
+
+ <p>🌱 En Omega Energy Colombia adoptamos principios de sostenibilidad en todas las actividades. Estas son nuestras reglas ambientales básicas:</p>
+<ul>
+  <li><span style="display:inline-block;width:14px;height:14px;background:#ffffff;border:1px solid #999;border-radius:50%;margin-right:8px;vertical-align:middle;"></span> Deposita los residuos <strong>aprovechables</strong> (papel, cartón, plástico, vidrio, metales) en el contenedor <strong>blanco</strong>.</li>
+  
+  <li><span style="display:inline-block;width:14px;height:14px;background:#28a745;border-radius:50%;margin-right:8px;vertical-align:middle;"></span> Los residuos <strong>orgánicos</strong> (restos de comida, cáscaras, residuos de jardinería) deben ir en el contenedor <strong>verde</strong>.</li>
+  
+  <li><span style="display:inline-block;width:14px;height:14px;background:#000000;border-radius:50%;margin-right:8px;vertical-align:middle;"></span> Los residuos <strong>no aprovechables</strong> (papel higiénico, servilletas, icopor, residuos contaminados) van en el contenedor <strong>negro</strong>.</li>
+</ul>
+<p>🚨 No mezcles residuos y usa correctamente los puntos ecológicos asignados.</p>
+<p>🔁 Recuerda: cada acción cuenta para proteger nuestro entorno y cumplir con la <strong>Resolución 2184 de 2019</strong>.</p>
+
+ <p style="margin-top: 20px;">♻️ <strong>Cada acción cuenta.</strong> La gestión adecuada de residuos contribuye directamente a la sostenibilidad y cumplimiento ambiental.</p>
+</section>
+<section>
+  <div class="img-superior-derecha">
+    <img src="https://i.postimg.cc/6517X1xh/Chat-GPT-Image-Jun-20-2025-02-29-42-PM.png" alt="Personaje PBI con EPP">
+  </div>
+
+  <h2>9. PLAN DE EMERGENCIAS</h2>
+
+  <p>El área cuenta con un sistema de emergencias que garantiza la respuesta oportuna ante cualquier evento:</p>
+
+  <ul>
+    <li>📢 Alarma sonora, sistema de aviso y activación rápida.</li>
+    <li>🚩 Señalización y rutas de evacuación visibles.</li>
+    <li>🧯 Brigadistas capacitados y asignados por turno.</li>
+    <li>📍 Punto de encuentro por zona claramente identificado.</li>
+  </ul>
+
+  <p>📌 En caso de emergencia:</p>
+
+  <ul>
+    <li>✅ Mantén la calma.</li>
+    <li>✅ Sigue instrucciones del brigadista.</li>
+    <li>✅ Desplázate al punto de encuentro asignado.</li>
+  </ul>
+<div class="seccion-contenido">
+  <h3>🗺️ Plano de evacuación </h3>
+  <p>A continuación se presenta el plano de evacuación actualizado. Asegúrate de identificar la ubicación del punto de encuentro y las rutas de salida más cercanas.</p>
+  <div class="imagen-seccion">
+    <img src="https://i.postimg.cc/hPKGFgpL/Plano-de-evacuacion-Corrales.png" alt="Plano de evacuación de las facilidades">
+  </div>
+</div>
+</section>
+  <section>
+  <div class="img-superior-derecha">
+    <img src="https://i.postimg.cc/6517X1xh/Chat-GPT-Image-Jun-20-2025-02-29-42-PM.png" alt="Personaje PBI con EPP">
+  </div>
+  <h2>🚨 11. SISTEMAS DE ALARMA EN CAMPO</h2>
+  <p>Ante cualquier activación del sistema de alarma, actúa prontamente y con la mejor actitud. Tu reacción adecuada marca la diferencia. Estos son los códigos establecidos en el área:</p>
+
+  <div class="card">
+    <h4>🔊 <strong>1 pito corto (10–15 s): Dirígete al punto de encuentro</strong></h4>
+    <p>Probable emergencia. Acude al punto de encuentro más cercano y espera instrucciones del coordinador de la emergencia.</p>
+  </div>
+
+  <div class="card">
+    <h4>🔊🔊 <strong>2 pitos largos: Presencia de gas</strong></h4>
+    <p>Emergencia confirmada. Evacúa sin correr hacia la portería Corrales 1D o punto de encuentro de salida, usando las rutas de evacuación.</p>
+  </div>
+
+  <div class="card">
+    <h4>🔊🔊🔊 <strong>3 pitos largos: Emergencia médica o ambiental</strong></h4>
+    <p>Asiste el personal brigadista y operativo al sitio indicado. Mantente fuera del área y facilita la atención segura.</p>
+  </div>
+
+  <p style="margin-top: 20px; font-style: italic; color: #00426c;">
+    👉 De tu reacción oportuna depende el éxito de la atención de emergencias.
+  </p>
+</section>
+
+ <section>
+  <div class="img-superior-derecha">
+    <img src="https://i.postimg.cc/6517X1xh/Chat-GPT-Image-Jun-20-2025-02-29-42-PM.png" alt="Personaje PBI con EPP">
+  </div>
+
+  <h2>12. TARJETAS DE APORTE</h2>
+
+  <p>Las tarjetas de aporte son el medio oficial para reportar observaciones sobre seguridad, ambiente o calidad dentro de nuestras instalaciones. Son anónimas, rápidas y fáciles de diligenciar.</p>
+
+  <p>🚀 ¿Qué puedes reportar?</p>
+
+  <ul>
+    <li>Condiciones o actos inseguros</li>
+    <li>Incidentes ambientales o riesgos operativos</li>
+    <li>Ideas de mejora o buenas prácticas</li>
+  </ul>
+
+  <img class="qr" src="https://i.postimg.cc/0Nhp4dDd/Captura-de-pantalla-2025-06-17-093430.png" alt="QR formulario tarjetas">
+
+  <p style="text-align:center; font-weight:bold;">
+    Participar es cuidar de ti y de tu equipo. 💬 ¡Gracias por ser parte activa de nuestra cultura HSEQ!
+  </p>
+</section>
+  
+<section>
+  <div class="img-superior-derecha">
+    <img src="https://i.postimg.cc/6517X1xh/Chat-GPT-Image-Jun-20-2025-02-29-42-PM.png" alt="Personaje PBI con EPP">
+  </div>
+
+  <h2>13. NORMAS DE COMPORTAMIENTO ESPERADO</h2>
+
+  <p>Durante tu visita al Bloque Buenavista, se espera que mantengas un comportamiento seguro, respetuoso y coherente con nuestra cultura. Las siguientes normas son obligatorias:</p>
+
+  <div class="comportamiento-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+
+    <div class="card">
+      <h4>🤝 Respeto y cortesía</h4>
+      <p>Dirígete con amabilidad al personal y sigue siempre las indicaciones del personal autorizado.</p>
+    </div>
+
+    <div class="card">
+      <h4>🚫 Cero distracciones</h4>
+      <p>No uses celulares mientras te desplazas por zonas operativas o técnicas.</p>
+    </div>
+
+    <div class="card">
+      <h4>📸 Fotografías restringidas</h4>
+      <p>No tomes fotos o grabes videos sin autorización expresa del personal responsable.</p>
+    </div>
+
+    <div class="card">
+      <h4>🛑 No manipules equipos</h4>
+      <p>Está prohibido tocar maquinaria, válvulas, botones o cualquier componente operativo.</p>
+    </div>
+
+    <div class="card">
+      <h4>📍 Respeta las zonas autorizadas</h4>
+      <p>No te desvíes de las rutas señalizadas. Mantente siempre dentro de las áreas permitidas.</p>
+    </div>
+
+    <div class="card">
+      <h4>💬 Reporta cualquier anomalía</h4>
+      <p>Si detectas una condición insegura, repórtala de inmediato a HSEQ o al personal en campo.</p>
+    </div>
+
+  </div>
+
+  <p style="margin-top: 20px;">📌 El incumplimiento de estas normas puede conllevar la suspensión del acceso o la cancelación de tu visita.</p>
+</section>
+<section>
+  <div class="img-superior-derecha">
+    <img src="https://i.postimg.cc/6517X1xh/Chat-GPT-Image-Jun-20-2025-02-29-42-PM.png" alt="Personaje PBI con EPP">
+  </div>
+
+  <h2>14. SEGURIDAD VIAL</h2>
+
+  <p>🚘 La seguridad vial es parte de nuestra cultura preventiva. Cada acción cuenta para proteger la vida propia y la de los demás. Sigue estas normas mientras estés en nuestras instalaciones o en tránsito hacia ellas:</p>
+
+  <div class="vial-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+
+    <div class="card">
+      <h4>📵 Sin distracciones</h4>
+      <p>No uses el celular mientras conduces ni durante desplazamientos a pie en zonas operativas.</p>
+    </div>
+
+    <div class="card">
+      <h4>⏱ Respeta los límites</h4>
+      <p>La velocidad máxima permitida es de <strong>10 km/h</strong> dentro del proyecto. Ajusta tu velocidad a las condiciones del entorno.</p>
+    </div>
+
+    <div class="card">
+      <h4>✅ Cinturón siempre</h4>
+      <p>Usa el cinturón de seguridad en todo momento, incluso para recorridos cortos dentro de la instalación.</p>
+    </div>
+
+    <div class="card">
+      <h4>🔁 Prioriza la vida</h4>
+      <p>Conduce de forma defensiva, cede el paso a peatones, y mantente alerta ante maniobras de vehículos pesados.</p>
+    </div>
+
+  </div>
+
+  <p style="margin-top: 20px;">📌 Recuerda: La seguridad vial empieza con tu actitud. Tu responsabilidad en la vía también protege a tus compañeros.</p>
+</section>
+  <section>
+  <div class="img-superior-derecha">
+    <img src="https://i.postimg.cc/6517X1xh/Chat-GPT-Image-Jun-20-2025-02-29-42-PM.png" alt="Personaje PBI con EPP">
+  </div>
+
+  <h2>🧾 15. RECOMENDACIONES FINALES ANTES DE INGRESAR</h2>
+  <p>Antes de iniciar tu visita, asegúrate de cumplir con los siguientes puntos:</p>
+
+  <ul style="list-style: none; padding-left: 0;">
+    <li><label><input type="checkbox" /> ✅ Recibiste la charla de inducción completa.</label></li>
+    <li><label><input type="checkbox" /> ✅ Usas el EPP completo requerido para el área a visitar.</label></li>
+    <li><label><input type="checkbox" /> ✅ Conoces los puntos de encuentro y rutas de evacuación.</label></li>
+    <li><label><input type="checkbox" /> ✅ Entiendes las tareas de alto riesgo y sus restricciones.</label></li>
+    <li><label><input type="checkbox" /> ✅ No portar celular mientras estés en áreas operativas.</label></li>
+    <li><label><input type="checkbox" /> ✅ Cumples las normas de seguridad vial y comportamiento.</label></li>
+    <li><label><input type="checkbox" /> ✅ Tienes el Permiso de Trabajo o autorización, si aplica.</label></li>
+  </ul>
+
+  <p style="margin-top: 20px;"><strong>📌 Recuerda:</strong> Tu seguridad y la de todos depende de tu actitud y cumplimiento. ¡Gracias por contribuir a un entorno seguro! 🙌</p>
+</section>
+<section>
+  <div class="img-superior-derecha">
+    <img src="https://i.postimg.cc/6517X1xh/Chat-GPT-Image-Jun-20-2025-02-29-42-PM.png" alt="Personaje PBI con EPP">
+  </div>
+<h2>16. CIERRE Y CULTURA CORPORATIVA</h2>
+
+<p>🎯 Gracias por completar esta inducción. Tu responsabilidad, coherencia y actitud hacen la diferencia. ¡Cuidémonos entre todos!</p>
+
+<div style="margin-top: 20px; border: 1px solid #ccc; padding: 20px; border-radius: 10px;">
+  <h4>🎥 Conoce más sobre nuestra cultura de seguridad</h4>
+  <p>Te invitamos a ver este video que refuerza los principios de seguridad industrial que promovemos en Omega Energy.</p>
+  <p style="text-align: center;">
+    <a href="https://drive.google.com/file/d/19cSoZqc8gUhy2XEqnV3DbHNDstnl9Yau/view?usp=sharing" target="_blank">
+      🔗 Ver video de seguridad industrial
+    </a>
+  </p>
+</div>
+
+<p style="margin-top: 30px;"><strong>👉 Da clic en el siguiente botón para presentar tu evaluación:</strong></p>
+
+<p style="text-align:center;">
+  <a class="final-button" href="https://forms.gle/C5FgaKvszRVgXpUt8" target="_blank"
+     style="display:inline-block; padding: 12px 24px; background-color:#28a745; color:white; font-weight:bold; border-radius:6px; text-decoration:none; box-shadow:0 2px 5px rgba(0,0,0,0.2); transition: background-color 0.3s ease;">
+     ✅ Presentar evaluación
+  </a>
+</p>
+</section>
+</div> <!-- Cierre correcto de .container -->
+
+<div class="nav-buttons">
+  <button id="btnAnterior" onclick="prevSection()">Anterior</button>
+  <button id="btnSiguiente" onclick="nextSection()">Siguiente</button>
+</div>
+
+<script>
+  let current = 0;
+  const sections = document.querySelectorAll("section");
+  const btnAnterior = document.getElementById("btnAnterior");
+  const btnSiguiente = document.getElementById("btnSiguiente");
+
+  function show(index) {
+    sections.forEach((s, i) => {
+      s.classList.toggle("active", i === index);
+    });
+
+    btnAnterior.style.display = (index === 0) ? "none" : "inline-block";
+    btnSiguiente.style.display = (index === sections.length - 1) ? "none" : "inline-block";
+
+    const progreso = ((index + 1) / sections.length) * 100;
+    document.getElementById("barraProgreso").style.width = progreso + "%";
+
+    // Elimina advertencia si se retrocede
+    const advertencia = document.getElementById("advertencia-check");
+    if (advertencia) advertencia.remove();
+  }
+
+  function nextSection() {
+    // Verifica si estamos en la sección 13 (índice 12)
+if (sections[current].querySelector("h2")?.textContent?.includes("RECOMENDACIONES FINALES")) {
+
+      const checkboxes = sections[current].querySelectorAll('input[type="checkbox"]');
+      const todosMarcados = Array.from(checkboxes).every(cb => cb.checked);
+
+      if (!todosMarcados) {
+        if (!document.getElementById("advertencia-check")) {
+          const advertencia = document.createElement("p");
+          advertencia.id = "advertencia-check";
+          advertencia.textContent = "⚠️ Por favor marca todos los ítems antes de continuar.";
+          advertencia.style.color = "red";
+          advertencia.style.marginTop = "15px";
+          sections[current].appendChild(advertencia);
+        }
+        return; // No avanza
+      }
+    }
+
+    if (current < sections.length - 1) {
+      current++;
+      show(current);
+    }
+  }
+
+  function prevSection() {
+    if (current > 0) {
+      current--;
+      show(current);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => show(current));
+</script>
+</body>
+</html>
