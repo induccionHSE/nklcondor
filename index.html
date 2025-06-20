@@ -6,11 +6,11 @@
   <title>Inducción HSEQ – Campo Condor</title>
   <style>
   :root {
-    --verde-nikoil: #1a7f3f; /* Verde corporativo Nikoil */
+    --verde-nikoil: #1a7f3f;
     --verde-hover: #155e2f;
-    --verde-enlace: #14692e;
-    --gris-fondo: #f2f4f2;
-    --gris-detalle: #d1d5d0;
+    --verde-enlace: #178a41;
+    --gris-fondo: #f4f4f4;
+    --gris-detalle: #d3d3d3;
     --blanco: #ffffff;
     --negro-suave: #333333;
   }
@@ -45,7 +45,7 @@
     max-width: 1000px;
     margin: 20px auto;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
   }
 
   section {
@@ -82,7 +82,7 @@
   }
 
   button:focus {
-    outline: 3px solid #cccccc;
+    outline: 3px solid #ffa500;
   }
 
   h1, h2 {
@@ -111,14 +111,13 @@
     border-radius: 6px;
   }
 
-  .seccion-contenido {
-  background-color: var(--gris-fondo); /* fondo blanco en todas las secciones */
-  border-left: 6px solid var(--verde-enlace);
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.05);
-  margin-bottom: 30px;
-}
+  details {
+    background-color: var(--gris-fondo);
+    border-left: 4px solid var(--verde-enlace);
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    cursor: pointer;
   }
 
   details[open] {
@@ -126,7 +125,7 @@
   }
 
   .seccion-contenido {
-    background-color: var(--gris-fondo);
+    background-color: var(--blanco);
     border-left: 6px solid var(--verde-enlace);
     padding: 30px;
     border-radius: 10px;
@@ -240,6 +239,7 @@
     font-size: 15px;
   }
 </style>
+
 </head>
 <body>
 <header>
