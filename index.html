@@ -1,3 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inducción HSEQ – Bloque Buenavista</title>
+  <style>
+  :root {
+    --azul-principal: #00556b;
+    --azul-hover: #003d4f;
+    --azul-enlace: #007088;
+    --gris-fondo: #f3f6f7;
+    --gris-detalle: #d8dee1;
+    --blanco: #ffffff;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: var(--gris-fondo);
+    margin: 0;
+    padding: 0;
+  }
+
+  header {
+    background-color: var(--azul-principal);
+    color: var(--blanco);
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  header img {
+    max-height: 60px;
+    max-width: 140px;
+    object-fit: contain;
+  }
+
+  .container {
+    background-color: var(--blanco);
+    padding: 40px;
+    max-width: 1000px;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+
+  section {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.6s ease-in-out;
+  }
+
+  section.active {
+    display: block;
+    opacity: 1;
+  }
+
+  .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+
+  button {
+    background-color: var(--azul-principal);
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 12px 24px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: var(--azul-hover);
+  }
+
+  button:focus {
+    outline: 3px solid #ffa500;
+  }
+
+  h1, h2 {
+    color: var(--azul-principal);
+  }
+
+  ul {
+    padding-left: 20px;
+  }
+
+  a {
+    color: var(--azul-enlace);
+  }
+
+  img.qr {
+    width: 200px;
+    display: block;
+    margin: 20px auto;
+  }
+
+  .card {
+    background: var(--gris-fondo);
+    border-left: 4px solid var(--azul-enlace);
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+  }
+
+  details {
+    background-color: var(--gris-fondo);
+    border-left: 4px solid var(--azul-enlace);
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  details[open] {
+    background-color: #e4f1f3;
+  }
+
+  .seccion-contenido {
+    background-color: var(--gris-fondo);
+    border-left: 6px solid var(--azul-enlace);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+  }
+
+  .imagen-seccion {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .imagen-seccion img {
+    max-width: 100%;
+    height: auto;
+    max-height: 350px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .imagen-seccion img:hover {
+    transform: scale(1.02);
+  }
+
+  .img-superior-derecha {
+    float: right;
+    margin-left: 20px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    max-width: 90px;
+    z-index: 1;
+  }
+
+  .img-superior-derecha img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
 
   section.has-personaje {
     padding-right: 120px;
